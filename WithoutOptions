@@ -1,0 +1,80 @@
+import java.util.LinkedHashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+public class FlightReservationWithoutOptions
+{
+
+	public static void main(String[] args)
+	{
+		Set<String> seatsNumber = new LinkedHashSet<String>();
+
+		System.out.println("Welcome in reservation menu!");
+		System.out.println("Enter:");
+		System.out.println("- \"R\" to make reservation," + "\n- \"S\" to check numbers of free seats,"
+				+ "\n- \"C\" to cancel reservation," + "\n- \"Q\" to quite the operation.");
+
+		Scanner input = new Scanner(System.in);
+
+		while (input.hasNextLine())
+		{
+			char decision = input.nextLine().charAt(0);
+
+			switch (decision)
+			{
+			case 'R':
+				System.out.println("Enter your first and last name to make a reservation: ");
+				String name = input.nextLine();
+				if (seatsNumber.contains(name) == false)
+				{
+
+					seatsNumber.add(name);
+					System.out.println("SUCCES! Thank you for reservation.");
+
+				} else
+				{
+					System.err.println("ERROR! This person is already reserved. Can't be reserved again.");
+				}
+
+				break;
+			case 'S':
+				System.out.println("Free seats:");
+				int avaibleSeats = 10;
+				if (!seatsNumber.isEmpty() == true)
+				{
+					int freeSeats = 10 - seatsNumber.size();
+					System.out.println("YES");
+					System.out.println(freeSeats + " out of 10");
+				}
+				if (seatsNumber.size() == avaibleSeats)
+				{
+					System.out.println("NO");
+				}
+				if (seatsNumber.isEmpty() == true)
+				{
+					System.out.println("YES");
+					System.out.println("Avaible seats: " + avaibleSeats);
+				}
+				break;
+			case 'C':
+				System.out.println("Enter your first and last name to cancel a reservation:");
+				String cancelReservation = input.nextLine();
+
+				if (seatsNumber.contains(cancelReservation))
+				{
+					seatsNumber.remove(cancelReservation);
+					System.out.println("SUCCES! Your reservation has been canceled.");
+				} else
+				{
+					System.err.println("ERROR! There isn't person on this date.");
+				}
+				break;
+			case 'Q':
+				System.out.println("Thank you for introducing changes. Have a nice day!");
+				break;
+			}
+
+		}
+
+	}
+}
