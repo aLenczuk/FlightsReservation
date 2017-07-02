@@ -6,8 +6,12 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class FlightReservationWORK
+public class FlightReservationWORK extends Flight
 {
+
+	public FlightReservationWORK(String direction, int seatsNumber, int id) {
+		super(direction, seatsNumber, id);
+	}
 
 	public static void main(String[] args)
 	{
@@ -39,10 +43,10 @@ public class FlightReservationWORK
 
 
 		System.out.println("Welcome in reservation menu!");
-		System.out.println("Please, choose flight in which you are interested in by enter a correct number:");
+		System.out.println("Please, choose the flight you are interested in by enter a correct number:");
 		for (Flight flight : flights)
 		{
-			System.out.println(flight.getId() + ". Direction: " + flight.getDirection() + ", Avaible seats: "
+			System.out.println(flight.getId() + ". Direction: " + flight.getDirection() + ", Available seats: "
 					+ flight.getSeatsNumber());
 		}
 
@@ -53,7 +57,7 @@ public class FlightReservationWORK
 			if (choosenDirection == flight.getId())
 			{
 				System.out.println("Enter:");
-				System.out.println("- \"R\" to make reservation," + "\n- \"S\" to check numbers of free seats,"
+				System.out.println("- \"R\" to make reservation," + "\n- \"S\" to check number of free seats,"
 						+ "\n- \"C\" to cancel reservation," + "\n- \"Q\" to quite the operation.");
 			}
 		}
@@ -71,15 +75,15 @@ public class FlightReservationWORK
 				
 					if(choosenDirection==flight1.getId()){
 						
-						boolean dublet = !seatsNumber1.contains(name);
+						boolean doublet = !seatsNumber1.contains(name);
 						if (seatsNumber1.size() < flight1.getSeatsNumber())
 						{
-							if (dublet == true)
+							if (doublet == true)
 							{
 								seatsNumber1.add(name);
-								System.out.println("SUCCES! Thank you for reservation.");
+								System.out.println("SUCCESS! Thank you for reservation.");
 							}
-							if (dublet == false)
+							if (doublet == false)
 							{
 								System.err.println("ERROR! This person is already reserved. Can't be reserved again.");
 							}
@@ -92,15 +96,15 @@ public class FlightReservationWORK
 				
 					if(choosenDirection==flight2.getId()){
 						
-						boolean dublet = !seatsNumber1.contains(name);
+						boolean doublet = !seatsNumber1.contains(name);
 						if (seatsNumber2.size() < flight2.getSeatsNumber())
 						{
-							if (dublet == true)
+							if (doublet == true)
 							{
 								seatsNumber2.add(name);
-								System.out.println("SUCCES! Thank you for reservation.");
+								System.out.println("SUCCESS! Thank you for reservation.");
 							}
-							if (dublet == false)
+							if (doublet == false)
 							{
 								System.err.println("ERROR! This person is already reserved. Can't be reserved again.");
 							}
@@ -112,15 +116,15 @@ public class FlightReservationWORK
 						}
 					if(choosenDirection==flight3.getId()){
 						
-						boolean dublet = !seatsNumber1.contains(name);
+						boolean doublet = !seatsNumber1.contains(name);
 						if (seatsNumber3.size() < flight3.getSeatsNumber())
 						{
-							if (dublet == true)
+							if (doublet == true)
 							{
 								seatsNumber3.add(name);
-								System.out.println("SUCCES! Thank you for reservation.");
+								System.out.println("SUCCESS! Thank you for reservation.");
 							}
-							if (dublet == false)
+							if (doublet == false)
 							{
 								System.err.println("ERROR! This person is already reserved. Can't be reserved again.");
 							}
@@ -132,15 +136,15 @@ public class FlightReservationWORK
 						}
 					if(choosenDirection==flight4.getId()){
 						
-						boolean dublet = !seatsNumber1.contains(name);
+						boolean doublet = !seatsNumber1.contains(name);
 						if (seatsNumber4.size() < flight4.getSeatsNumber())
 						{
-							if (dublet == true)
+							if (doublet == true)
 							{
 								seatsNumber4.add(name);
-								System.out.println("SUCCES! Thank you for reservation.");
+								System.out.println("SUCCESS! Thank you for reservation.");
 							}
-							if (dublet == false)
+							if (doublet == false)
 							{
 								System.err.println("ERROR! This person is already reserved. Can't be reserved again.");
 							}
@@ -171,7 +175,7 @@ public class FlightReservationWORK
 						if (seatsNumber1.isEmpty())
 						{
 							System.out.println("YES");
-							System.out.println("Avaible seats: " + flight1.getSeatsNumber());
+							System.out.println("Available seats: " + flight1.getSeatsNumber());
 						}
 					
 				}
@@ -192,7 +196,7 @@ public class FlightReservationWORK
 						if (seatsNumber2.isEmpty())
 						{
 							System.out.println("YES");
-							System.out.println("Avaible seats: " + flight2.getSeatsNumber());
+							System.out.println("Available seats: " + flight2.getSeatsNumber());
 						}
 					
 				}
@@ -213,7 +217,7 @@ public class FlightReservationWORK
 						if (seatsNumber3.isEmpty())
 						{
 							System.out.println("YES");
-							System.out.println("Avaible seats: " + flight3.getSeatsNumber());
+							System.out.println("Available seats: " + flight3.getSeatsNumber());
 						}
 					
 				}
@@ -248,7 +252,7 @@ public class FlightReservationWORK
 						if (seatsNumber1.contains(cancelReservation))
 						{
 							seatsNumber1.remove(cancelReservation);
-							System.out.println("SUCCES! Your reservation has been cancelled.");
+							System.out.println("SUCCESS! Your reservation has been cancelled.");
 						} else
 						{
 							System.err.println("ERROR! There isn't person on this date.");
@@ -260,7 +264,7 @@ public class FlightReservationWORK
 						if (seatsNumber2.contains(cancelReservation))
 						{
 							seatsNumber2.remove(cancelReservation);
-							System.out.println("SUCCES! Your reservation has been cancelled.");
+							System.out.println("SUCCESS! Your reservation has been cancelled.");
 						} else
 						{
 							System.err.println("ERROR! There isn't person on this date.");
@@ -272,7 +276,7 @@ public class FlightReservationWORK
 						if (seatsNumber3.contains(cancelReservation))
 						{
 							seatsNumber3.remove(cancelReservation);
-							System.out.println("SUCCES! Your reservation has been cancelled.");
+							System.out.println("SUCCESS! Your reservation has been cancelled.");
 						} else
 						{
 							System.err.println("ERROR! There isn't person on this date.");
@@ -284,7 +288,7 @@ public class FlightReservationWORK
 						if (seatsNumber4.contains(cancelReservation))
 						{
 							seatsNumber4.remove(cancelReservation);
-							System.out.println("SUCCES! Your reservation has been cancelled.");
+							System.out.println("SUCCESS! Your reservation has been cancelled.");
 						} else
 						{
 							System.err.println("ERROR! There isn't person on this date.");
@@ -298,6 +302,7 @@ public class FlightReservationWORK
 			}
 
 			  
-			}
-
+		}
 	}
+
+}
