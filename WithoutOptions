@@ -1,80 +1,144 @@
+import java.util.InputMismatchException;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class FlightReservationWithoutOptions
+public class FlightReservationWithoutOptions extends Flight
 {
+
+	public FlightReservationWithoutOptions(String direction, int seatsNumber, int id) {
+		super(direction, seatsNumber, id);
+	}
 
 	public static void main(String[] args)
 	{
+
+		Flight flight1 = new Flight("Roma", 10, 1);
+		Flight flight2 = new Flight("Oslo", 12, 2);
+		Flight flight3 = new Flight("Berlin", 15, 3);
+		Flight flight4 = new Flight("Amsterdam", 2, 4);
+
+		Set<Flight> flights = new LinkedHashSet<Flight>();
+
+		flights.add(flight1);
+		flights.add(flight2);
+		flights.add(flight3);
+		flights.add(flight4);
+
 		Set<String> seatsNumber = new LinkedHashSet<String>();
+		
+		Map<Flight, Set<String>> reservedPeople = new LinkedHashMap<Flight, Set<String>>();
+		
 
 		System.out.println("Welcome in reservation menu!");
-		System.out.println("Enter:");
-		System.out.println("- \"R\" to make reservation," + "\n- \"S\" to check numbers of free seats,"
-				+ "\n- \"C\" to cancel reservation," + "\n- \"Q\" to quite the operation.");
+		System.out.println("Please, choose the flight you are interested in by enter a correct number:");
+		for (Flight flight : flights)
+		{
+			System.out.println(flight.getId() + ". Direction: " + flight.getDirection() + ", Available seats: "
+			+ flight.getSeatsNumber());
+		}
 
 		Scanner input = new Scanner(System.in);
-
-		while (input.hasNextLine())
+		int choosenDirection = input.nextInt();
+		for (Flight flight : flights)
 		{
-			char decision = input.nextLine().charAt(0);
+			if (choosenDirection == flight.getId())
+			{
+				System.out.println("Enter:");
+				System.out.println("- \"R\" to make reservation," + "\n- \"S\" to check number of free seats,"
+				+ "\n- \"C\" to cancel reservation," + "\n- \"Q\" to quite the operation.");
+			}
+		}
+		Scanner in = new Scanner(System.in);
+
+		while (in.hasNextLine())
+		{
+			char decision = in.nextLine().charAt(0);
 
 			switch (decision)
 			{
 			case 'R':
 				System.out.println("Enter your first and last name to make a reservation: ");
-				String name = input.nextLine();
-				if (seatsNumber.contains(name) == false)
+				String name = in.nextLine();
+				for (Flight flight : flights)
 				{
+					if (choosenDirection==flight.getId())
+					{
+						boolean dublet = !seatsNumber.contains(name);
+						if (seatsNumber.size() < flight.getSeatsNumber())
+						{
+							if (dublet == true)
+							{
+								seatsNumber.add(name);
+								System.out.println("SUCCESS! Thank you for reservation.");
+							}
+							if (dublet == false)
+							{
+								System.err.println("ERROR! This person is already reserved. Can't be reserved again.");
+							}
+						} else
+						{
+							System.out.println("ERROR! No free seats for this flight.");
+						}
+					}
 
-					seatsNumber.add(name);
-					System.out.println("SUCCES! Thank you for reservation.");
-
-				} else
-				{
-					System.err.println("ERROR! This person is already reserved. Can't be reserved again.");
 				}
-
 				break;
 			case 'S':
 				System.out.println("Free seats:");
-				int avaibleSeats = 10;
-				if (!seatsNumber.isEmpty() == true)
+				for (Flight flight : flights)
 				{
-					int freeSeats = 10 - seatsNumber.size();
-					System.out.println("YES");
-					System.out.println(freeSeats + " out of 10");
-				}
-				if (seatsNumber.size() == avaibleSeats)
-				{
-					System.out.println("NO");
-				}
-				if (seatsNumber.isEmpty() == true)
-				{
-					System.out.println("YES");
-					System.out.println("Avaible seats: " + avaibleSeats);
+					if (choosenDirection == flight.getId())
+					{
+						if (!seatsNumber.isEmpty())
+						{
+							int freeSeats = flight.getSeatsNumber() - seatsNumber.size();
+							if (freeSeats != 0 && freeSeats > -1)
+							{
+								System.out.println("YES");
+								System.out.println(freeSeats + " out of " + flight.getSeatsNumber());
+							} else if (freeSeats == 0 && freeSeats >= -1)
+							{
+								System.out.println("NO");
+							}
+						}
+						if (seatsNumber.isEmpty())
+						{
+							System.out.println("YES");
+							System.out.println("Available seats: " + flight.getSeatsNumber());
+						}
+					}
 				}
 				break;
 			case 'C':
 				System.out.println("Enter your first and last name to cancel a reservation:");
-				String cancelReservation = input.nextLine();
-
-				if (seatsNumber.contains(cancelReservation))
+				String cancelReservation = in.nextLine();
+				for (Flight flight : flights)
 				{
-					seatsNumber.remove(cancelReservation);
-					System.out.println("SUCCES! Your reservation has been canceled.");
-				} else
-				{
-					System.err.println("ERROR! There isn't person on this date.");
+					if (choosenDirection == flight.getId())
+					{
+						if (seatsNumber.contains(cancelReservation))
+						{
+							seatsNumber.remove(cancelReservation);
+							System.out.println("SUCCESS! Your reservation has been cancelled.");
+						} else
+						{
+							System.err.println("ERROR! There isn't person on this date.");
+						}
+					}
 				}
 				break;
 			case 'Q':
 				System.out.println("Thank you for introducing changes. Have a nice day!");
 				break;
 			}
-
+			
 		}
 
 	}
+
 }
+
+
